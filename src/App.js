@@ -52,14 +52,23 @@ function App() {
   }, []);
 
   const getUser = () => {
-    const cookie = document.cookie;
-    var index = cookie.indexOf("userId=");
-    var userIdString = cookie.slice(index + "userId=".length);
-    if (userIdString === "") {
-      // cookie is empty, try another way to identify the user
-      userIdString = navigator.userAgent;
+    // const cookie = document.cookie;
+    // var index = cookie.indexOf("userId=");
+    // var userIdString = cookie.slice(index + "userId=".length);
+    // if (userIdString === "") {
+    //   // cookie is empty, try another way to identify the user
+    //   userIdString = navigator.userAgent;
+    // }
+    // setUserId(userIdString);
+
+    // Check if the user has a userId stored in local storage
+    let storageUserId = localStorage.getItem("userId");
+    // If the user doesn't have a userId, generate a new one and store it in local storage
+    if (!storageUserId) {
+      storageUserId = uuidv4();
+      localStorage.setItem("userId", storageUserId);
     }
-    setUserId(userIdString);
+    setUserId(storageUserId);
   };
 
   const getCounterLitCandles = async () => {
