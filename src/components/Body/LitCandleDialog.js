@@ -10,44 +10,50 @@ const LitCandleDialog = ({ cardOpen, setCardOpen, person, isComputer }) => {
     setCardOpen(false);
   };
 
-  const shareImg = (imageDataUrl) => {
-    navigator
-      .share({
-        title: "Shared Image",
-        text: "Check out this image!",
-        url: imageDataUrl,
-      })
-      .catch((error) => console.error("Error sharing:", error));
-  };
-
   const downloadImg = (imageDataUrl) => {
     // create a download img
-    const downloadLink = document.createElement("a");
-    downloadLink.href = imageDataUrl;
-    downloadLink.download = "shared_image.png";
-    downloadLink.click();
+    const cardElement = document.querySelector(".cardToShare");
+    html2canvas(cardElement).then((canvas) => {
+      const imageDataUrl = canvas.toDataURL();
+      const downloadLink = document.createElement("a");
+      downloadLink.href = imageDataUrl;
+      downloadLink.download = "מדליקים נר בשבוע המודעות לשכול האזרחי.png";
+      downloadLink.click();
+    });
   };
 
   const handleShareImage = () => {
-    // Get the card element
-    const cardElement = document.querySelector(".cardToShare");
-    // Use html2canvas to capture the content as an image
-    html2canvas(cardElement).then((canvas) => {
-      // Convert the canvas to a data URL
-      const imageDataUrl = canvas.toDataURL();
-      if (isComputer) {
-        downloadImg(imageDataUrl);
+    if (isComputer) {
+      downloadImg();
+    } else {
+      // If it's a mobile device, try to open the share menu
+      if (navigator.share) {
+        shareImg();
       } else {
-        // If it's a mobile device, try to open the share menu
-        if (navigator.share) {
-          shareImg(imageDataUrl);
-        } else {
-          // Handle the case where the share API is not supported
-          downloadImg(imageDataUrl);
-        }
+        // Handle the case where the share API is not supported
+        downloadImg();
       }
-    });
+    }
   };
+
+  async function shareImg() {
+    const element = document.querySelector(".cardToShare"),
+      canvas = await html2canvas(element),
+      data = canvas.toDataURL("image/jpg");
+    const response = await fetch(data);
+    const blob = await response.blob();
+    const filesArray = [
+      new File([blob], "מדליקים נר בשבוע המודעות לשכול האזרחי.jpg", {
+        type: "image/jpeg",
+        lastModified: new Date().getTime(),
+      }),
+    ];
+    const shareData = {
+      files: filesArray,
+      text: "https://shirshevach.github.io/yakirLi-web/\n#מדליקים_נר",
+    };
+    navigator.share(shareData);
+  }
 
   const imageStyle = {
     width: isComputer ? "345px" : "300px",
