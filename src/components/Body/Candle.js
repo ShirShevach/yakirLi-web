@@ -33,8 +33,8 @@ const Candle = ({ userId, person, handleClickCandle, isComputer }) => {
   const handleClick = (event) => {
     if (!userLitCandle) {
       handleClickCandle(event);
-      setLitCandleOpen(true);
     }
+    setLitCandleOpen(true);
   };
 
   const handleClose = () => {

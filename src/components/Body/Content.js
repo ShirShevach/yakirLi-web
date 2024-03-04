@@ -17,6 +17,9 @@ const Content = () => {
         <Typography style={Style.line}>
           ♡ לצרף יחד נר ועוד נר לחיבור גדול שכולו אור
         </Typography>
+        <Typography style={{ ...Style.line, fontSize: 20, color: "red" }}>
+          האתר בעדכון. אין גישה לשרת.
+        </Typography>
       </div>
     </>
   );

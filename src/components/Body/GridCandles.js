@@ -4,6 +4,9 @@ import Candle from "./Candle.js";
 import AddPersonDialog from "./AddPersonDialog.js";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import * as Style from "./BodyStyle";
 
 const Candles = ({
@@ -38,7 +41,18 @@ const Candles = ({
   return (
     <div>
       {!personList.length ? (
-        <CircularProgress />
+        // <CircularProgress />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="start"
+          height="100vh"
+        >
+          <Stack spacing={2} direction="row">
+            <Skeleton variant="rounded" width={179} height={304} />
+            <Skeleton variant="rounded" width={179} height={304} />
+          </Stack>
+        </Box>
       ) : (
         <Grid
           container
