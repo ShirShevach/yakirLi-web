@@ -10,7 +10,15 @@ const LitCandleDialog = ({ cardOpen, setCardOpen, person, isComputer }) => {
     setCardOpen(false);
   };
 
-  const downloadImg = (imageDataUrl) => {
+  const handleShareImage = () => {
+    if (navigator.share) {
+      shareImg();
+    } else {
+      downloadImg();
+    }
+  };
+
+  const downloadImg = () => {
     // create a download img
     const cardElement = document.querySelector(".cardToShare");
     html2canvas(cardElement).then((canvas) => {
@@ -22,46 +30,22 @@ const LitCandleDialog = ({ cardOpen, setCardOpen, person, isComputer }) => {
     });
   };
 
-  const handleShareImage = () => {
-    // if (isComputer) {
-    //   downloadImg();
-    // } else {
-    // If it's a mobile device, try to open the share menu
-    if (navigator.share) {
-      shareImg();
-    } else {
-      // Handle the case where the share API is not supported
-      downloadImg();
-    }
-    // }
-  };
-
   async function shareImg() {
     const element = document.querySelector(".cardToShare"),
       canvas = await html2canvas(element),
       data = canvas.toDataURL("image/jpg");
     const response = await fetch(data);
     const blob = await response.blob();
-    // Check if sharing files is supported directly within the navigator.share object
-    // if (navigator.share && navigator.share.files) {
-      const filesArray = [
-        new File([blob], "מדליקים נר בשבוע המודעות לשכול האזרחי.jpg", {
-          type: "image/jpeg",
-          lastModified: new Date().getTime(),
-        }),
-      ];
-
-      const shareData = {
-        files: filesArray,
-        // text: "https://shirshevach.github.io/yakirLi-web/\n#מדליקים_נר",
-      };
-
-      navigator.share(shareData);
-    // } else {
-      // Fallback behavior if sharing files is not supported
-      // console.log("Sharing files not supported.");
-      // You might want to implement a fallback behavior here, like sharing a link instead.
-    // }
+    const filesArray = [
+      new File([blob], "מדליקים נר בשבוע המודעות לשכול האזרחי.jpg", {
+        type: "image/jpeg",
+        lastModified: new Date().getTime(),
+      }),
+    ];
+    const shareData = {
+      files: filesArray,
+    };
+    navigator.share(shareData);
   }
 
   const imageStyle = {

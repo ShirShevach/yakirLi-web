@@ -80,7 +80,7 @@ const AddPersonDialog = ({
           id="age"
           name="age"
           label="גיל פטירה"
-          type="number"
+          type="text"
           fullWidth
           onChange={(event) => {
             setNewPerson((person) => ({

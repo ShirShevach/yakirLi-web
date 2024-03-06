@@ -1,7 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import * as Style from "./BodyStyle";
-// import paragraph from "./paragraph.txt";
 
 const p1 =
   "מדי שנה נפטרים בישראל כ-1,000 ילדים וילדות (מלידה ועד גיל 24), ממחלה או אסון טרגי.";
@@ -15,9 +14,6 @@ const Content = () => {
   return (
     <>
       <div style={{ ...Style.contentTitle, fontWeight: "bold" }}>
-        <Typography style={{ ...Style.line, fontSize: 25, color: "red" }}>
-          האתר בעדכון. אין גישה לשרת.
-        </Typography>
         <Typography style={Style.line}>מצטרפים למיזם ומדליקים נר!</Typography>
       </div>
       <div style={Style.contentSubTitle}>

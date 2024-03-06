@@ -41,12 +41,12 @@ export const paragraphLine = {
   font: "inherit",
   fontSize: 17,
   direction: "rtl",
-  padding: "0px 0px"
+  padding: "0px 0px",
 };
 
 export const line = {
   font: "inherit",
-  fontSize: 17,
+  fontSize: 18,
   direction: "rtl",
   margin: "4px 0 0 0",
 };

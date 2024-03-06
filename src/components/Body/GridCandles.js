@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import React, { useState } from "react";
 import Candle from "./Candle.js";
 import AddPersonDialog from "./AddPersonDialog.js";
@@ -41,7 +41,6 @@ const Candles = ({
   return (
     <div>
       {!personList.length ? (
-        // <CircularProgress />
         <Box
           display="flex"
           justifyContent="center"

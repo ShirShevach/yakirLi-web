@@ -35,7 +35,6 @@ const SignIn = ({ signInOpen, setSignInOpen }) => {
       <DialogContent style={{ backgroundColor: lightBrown, paddingTop: 10 }}>
         <TextField
           label="שם ושם משפחה"
-          autoFocus
           required
           margin="dense"
           id="standard-basic"
