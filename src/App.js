@@ -12,17 +12,13 @@ function App() {
   const [counterLitCandles, setCounterLitCandles] = useState("-");
   const [isComputer, setIsComputer] = useState(false);
 
-  const getPersons = useCallback(() => {
-    axios
-      .get(`${baseURL}/persons`)
-      .then((res) => {
-        setPersons([...res.data["Persons"]]);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  useEffect(() => {
+    getUser();
+    getPersons();
+    getCounterLitCandles();
   }, []);
 
+  // Update the 'isComputer' state based on the current screen height
   const updateHeight = () => {
     const device = window.innerWidth < 600 ? false : true;
     setIsComputer(device);
@@ -48,6 +44,17 @@ function App() {
     setUserId(storageUserId);
   };
 
+  const getPersons = useCallback(() => {
+    axios
+      .get(`${baseURL}/persons`)
+      .then((res) => {
+        setPersons([...res.data["Persons"]]);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
+
   const getCounterLitCandles = useCallback(() => {
     axios
       .get(`${baseURL}/counterLitCandles`)
@@ -57,12 +64,6 @@ function App() {
       .catch((error) => {
         console.log(error.message);
       });
-  }, []);
-
-  useEffect(() => {
-    getUser();
-    getPersons();
-    getCounterLitCandles();
   }, []);
 
   const addPerson = (newPerson) => {
