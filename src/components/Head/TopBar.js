@@ -24,8 +24,8 @@ const button = {
   font: "inherit",
 };
 
-const yakir_li_web_link =
-  "https://yakirli.org/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D-%D7%9C%D7%A9%D7%91%D7%95%D7%A2-%D7%94%D7%9E%D7%95%D7%93%D7%A2%D7%95%D7%AA/";
+const yakir_li_web_link = "https://yakirli.org";
+
 const handleShareClick = async () => {
   try {
     // Check if the navigator.share API is available
@@ -62,14 +62,14 @@ const TopBar = () => {
             >
               הירשם לקבל עדכונים
             </Button>
-            <Button
+            {/* <Button
               style={button}
               size="small"
               onClick={handleShareClick}
               startIcon={<ShareIcon />}
             >
               שיתוף
-            </Button>
+            </Button> */}
             <Button
               style={button}
               size="small"
@@ -78,7 +78,7 @@ const TopBar = () => {
               component="a"
               target="_blank"
             >
-              למידע אודות שבוע המודעות
+              למיזמים נוספים של העמותה
             </Button>
           </ButtonGroup>
         </Toolbar>

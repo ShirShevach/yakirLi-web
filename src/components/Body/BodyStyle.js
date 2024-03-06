@@ -31,7 +31,17 @@ export const contentSubTitle = {
   display: "block",
   font: "inherit",
   fontSize: 17,
-  margin: "0px auto",
+  margin: "7px auto",
+};
+
+export const paragraphLine = {
+  margin: "7px 20px",
+  textAlign: "center",
+  wordWrap: "break-word",
+  font: "inherit",
+  fontSize: 17,
+  direction: "rtl",
+  padding: "0px 0px"
 };
 
 export const line = {
