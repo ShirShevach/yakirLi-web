@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/yakirLi-web/static/css/main.62dae436.css",
-    "main.js": "/yakirLi-web/static/js/main.032d6b8c.js",
+    "main.css": "/yakirLi-web/static/css/main.3729c426.css",
+    "main.js": "/yakirLi-web/static/js/main.e477c68b.js",
     "static/js/592.599f76a2.chunk.js": "/yakirLi-web/static/js/592.599f76a2.chunk.js",
     "static/media/candle-yakir.jpeg": "/yakirLi-web/static/media/candle-yakir.4e6c0c18758bce7df72c.jpeg",
     "static/media/yakir_li_logo.png": "/yakirLi-web/static/media/yakir_li_logo.9a9afe2520ebf7f1bc35.png",
     "index.html": "/yakirLi-web/index.html",
-    "main.62dae436.css.map": "/yakirLi-web/static/css/main.62dae436.css.map",
-    "main.032d6b8c.js.map": "/yakirLi-web/static/js/main.032d6b8c.js.map",
+    "main.3729c426.css.map": "/yakirLi-web/static/css/main.3729c426.css.map",
+    "main.e477c68b.js.map": "/yakirLi-web/static/js/main.e477c68b.js.map",
     "592.599f76a2.chunk.js.map": "/yakirLi-web/static/js/592.599f76a2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.62dae436.css",
-    "static/js/main.032d6b8c.js"
+    "static/css/main.3729c426.css",
+    "static/js/main.e477c68b.js"
   ]
 }
