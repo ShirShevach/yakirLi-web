@@ -1,17 +1,35 @@
-import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TopBar from "./components/Head/TopBar";
 import Title from "./components/Head/Title";
 import Body from "./components/Body/Body";
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import { db } from "./config-firebase";
+import {
+  getDoc,
+  getDocs,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  increment,
+  query,
+  orderBy,
+} from "firebase/firestore";
+
 function App() {
-  const baseURL = "http://localhost:3080";
   const [userId, setUserId] = useState("");
   const [persons, setPersons] = useState([]);
   const [counterLitCandles, setCounterLitCandles] = useState("-");
   const [isComputer, setIsComputer] = useState(false);
 
+  // Firestore collections references
+  const personsCollection = collection(db, "persons");
+  const counterCollection = collection(db, "counter");
+
+  // Fetch user ID, persons data, and counter data on initial render
   useEffect(() => {
     getUser();
     getPersons();
@@ -24,6 +42,7 @@ function App() {
     setIsComputer(device);
   };
 
+  // Set up event listener for screen resize
   useEffect(() => {
     updateHeight();
     window.addEventListener("resize", updateHeight);
@@ -32,6 +51,7 @@ function App() {
     };
   }, []);
 
+  // Function to get or generate user ID
   const getUser = () => {
     // Check if the user has a userId stored in local storage
     let storageUserId = localStorage.getItem("userId");
@@ -44,51 +64,77 @@ function App() {
     setUserId(storageUserId);
   };
 
-  const getPersons = useCallback(() => {
-    axios
-      .get(`${baseURL}/persons`)
-      .then((res) => {
-        setPersons([...res.data["Persons"]]);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }, []);
+  // Function to fetch persons data from Firestore
+  const getPersons = useCallback(async () => {
+    try {
+      // Create a query to order documents by the "timestamp" field in descending order
+      const q = query(personsCollection, orderBy("timestamp", "desc"));
+      const data = await getDocs(q);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setPersons([...filteredData]);
+      console.log(filteredData);
+    } catch (err) {
+      console.error(err);
+    }
+  });
 
-  const getCounterLitCandles = useCallback(() => {
-    axios
-      .get(`${baseURL}/counterLitCandles`)
-      .then((res) => {
-        setCounterLitCandles(res.data.counterLitCandles);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }, []);
+  // Function to fetch counter data from Firestore
+  const getCounterLitCandles = useCallback(async () => {
+    try {
+      const counterDocRef = doc(counterCollection, "1");
+      const docSnapshot = await getDoc(counterDocRef);
+      setCounterLitCandles(docSnapshot.data().numLit);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
-  const addPerson = (newPerson) => {
-    const uniqueId = uuidv4();
-    axios
-      .post(`${baseURL}/persons`, { ...newPerson, id: uniqueId })
-      .then((res) => {
-        getPersons();
-      })
-      .catch((error) => {
-        console.error("Failed adding person:", error);
+  // Function to add a new person to Firestore
+  const addPerson = async (newPerson) => {
+    const timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    try {
+      await addDoc(personsCollection, {
+        ...newPerson,
+        users: [],
+        timestamp: timestamp,
       });
+    } catch (err) {
+      console.error(err);
+    }
+    getPersons(); // Refresh persons data after adding a new person
   };
 
-  const clickCandle = (event) => {
+  // Function to handle click event on Candle
+  const clickCandle = async (event) => {
     const personId = event.target.id;
-    axios
-      .put(`${baseURL}/persons/${personId}&${userId}`, {})
-      .then((res) => {
-        getPersons();
-        getCounterLitCandles();
-      })
-      .catch((error) => {
-        console.log(error.message);
+    const currentPerson = doc(db, "persons", personId);
+
+    // update users list in personId
+    try {
+      const docSnapshot = await getDoc(currentPerson);
+      const currentUsers = docSnapshot.data().users || [];
+      const updatedUsers = [...currentUsers, userId];
+      await updateDoc(currentPerson, { users: updatedUsers });
+    } catch (err) {
+      console.error(err);
+    }
+
+    // increment NumLit
+    try {
+      const counterDocRef = doc(counterCollection, "1");
+      await updateDoc(counterDocRef, {
+        numLit: increment(1),
       });
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Refresh persons data and counter data after updating
+    getPersons();
+    getCounterLitCandles();
   };
 
   return (
