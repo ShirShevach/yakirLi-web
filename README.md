@@ -1,8 +1,5 @@
-<p align="center">
-  <h1>Yakir Li Candles Website</h1>
-</p>
-
-## [Click here](https://yakirli.org/candles/) to visit the website.
+<h1 align="center">Yakir Li Candles Website</h1>
+<h2 align="center"><a  href="https://yakirli.org/candles/">Visit Website</a></h2>
 
 ## Technologies Used
 
