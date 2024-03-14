@@ -25,17 +25,17 @@ const button = {
 };
 
 const yakir_li_web_link = "https://yakirli.org";
+const sign_in_link = "https://yakir-li.ravpage.co.il/active_week";
 
+// cancelled
 const handleShareClick = async () => {
   try {
-    // Check if the navigator.share API is available
     if (navigator.share) {
       await navigator.share({
         title: document.title,
         url: window.location.href,
       });
     } else {
-      // Fallback for browsers that do not support navigator.share
       alert("לחצן השיתוף אינו נתמך בדפדפן זה");
     }
   } catch (error) {
@@ -45,6 +45,8 @@ const handleShareClick = async () => {
 
 const TopBar = () => {
   const [signInOpen, setSignInOpen] = useState(false);
+
+  // cancelled
   const handleSignInClick = () => {
     setSignInOpen(true);
   };
@@ -57,10 +59,13 @@ const TopBar = () => {
             <Button
               style={button}
               size="small"
-              onClick={handleSignInClick}
+              // onClick={handleSignInClick}
+              href={sign_in_link}
+              component="a"
+              target="_blank"
               startIcon={<Diversity3Icon />}
             >
-              הירשם לקבל עדכונים
+              להרשמה לפעילויות בשבוע המודעות
             </Button>
             {/* <Button
               style={button}
